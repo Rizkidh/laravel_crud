@@ -64,4 +64,16 @@ class TaskController extends Controller
         // 3. Redirect dengan pesan sukses
         return redirect()->route('tasks.index')->with('success', 'Task berhasil dibuat!');
     }
+
+    public function updateStatus(Request $request, Task $task)
+    {
+        $request->validate([
+            'status' => 'required|in:Not Started,In Progress,Completed'
+        ]);
+
+        $task->status = $request->status;
+        $task->save();
+
+        return redirect()->back()->with('success', 'Status berhasil diperbarui!');
+    }
 }
